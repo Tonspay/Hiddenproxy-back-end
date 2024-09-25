@@ -8,6 +8,7 @@ const sUser = "users";
 const sDomain = "domain";
 const sPath = "path"
 const sDns = "nameserver";
+const sVIPApiKey = "vip_apikey"
 
 //DB struct
 const accountStruct = {
@@ -151,6 +152,52 @@ async function delDomain(name,uid)
     return true;
 
 }
+
+
+/**
+ * Auth system for VIP-api-key
+ * 
+ * Authkey :: RandomKey :: APIKEY:UID+timestamp+Random(6) toString(36)
+ */
+
+async function getVIPApiKey(uid) {
+    const pool = await MongoClient.connect(process.env.DB_HOST)
+    var db = pool.db(mainDB);
+    var ret = await db.collection(sVIPApiKey).find({
+        uid: uid.toString()
+    }).project({}).toArray();
+    await pool.close();
+    return ret;
+}
+
+async function getApiKeyVIP(key) {
+    const pool = await MongoClient.connect(process.env.DB_HOST)
+    var db = pool.db(mainDB);
+    var ret = await db.collection(sVIPApiKey).find({
+        key: key
+    }).project({}).toArray();
+    await pool.close();
+    if (ret.length > 0) {
+        return ret[0];
+    } else {
+        return false;
+    }
+
+}
+
+
+async function newVIPApiKey(uid, data) {
+    const pool = await MongoClient.connect(process.env.DB_HOST)
+    var db = pool.db(mainDB);
+    await db.collection(sVIPApiKey).insertOne({
+        uid: uid.toString(),
+        key: data,
+        createTime: Date.now()
+    });
+    await pool.close();
+    return true;
+}
+
 module.exports = {
     newAccount,
     getAccountById,
@@ -161,6 +208,11 @@ module.exports = {
     delDomain,
     getDomain,
     verfiDomainOwning,
-    updateDomainForward
+    updateDomainForward,
+
+
+    getVIPApiKey,
+    getApiKeyVIP,
+    newVIPApiKey
 }
 

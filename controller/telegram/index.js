@@ -4,6 +4,7 @@ const token = process.env.TELEGRAMBOTAPI;
 const tool = require("../../utils/tools")
 const menu = require("./src/menu");
 const domain = require("./src/domain")
+const setting = require("./src/setting")
 const bot = new TelegramBot(token, {polling: true});
 bot.on('message', async (msg) => {
     try{
@@ -100,6 +101,12 @@ async function callBackRouter(data,action,opts )
             break;
         case "domain_edit_path":
             await domain.editDomainPath(bot,uid,req,data,opts);
+            break;
+        case "setting":
+            await setting.menu(bot, uid, req, data);
+            break;
+        case "keygen":
+            await setting.newKeygen(bot, uid, req, data);
             break;
         case "empty":
             return null;

@@ -45,7 +45,21 @@ or set 301 redirect to your \`.ton\` / \`.adnl\` domain here.
             `⚙ Function`,
             `is under building ...`,
             `Hiddenproxy is a open-source project , You can visit [github](https://github.com/Tonspay/Hiddenproxy-back-end)`
-        ]
+        ],
+        "keygenAlter": [
+            "*Your new api-key generated*",
+            "Please Keep it safe , and cancle it when it leask .",
+            "*⚠️Keygen failed .* You might already reach api-key usage limit ."
+        ],
+        "setting": [
+            `*Setting*`,
+            ``,
+            ``,
+            ``,
+            ``,
+            ``,
+            `The api-keys`
+        ],
     }
 ]
 
@@ -54,7 +68,7 @@ const btn = [
         "mainMenu":[
             `Register domain`,
             `Domain manager`,
-            `Address book`
+            `Generate API Key`
         ],
         "register":[
             `confirm registe`
@@ -65,6 +79,13 @@ const btn = [
             `⚙Edit Redirect`,
             `🛠Delete Domain`,
             `⚠️ Confirm Delete`
+        ],
+        "settingMenu": [
+            `Edit invoice tittle`,
+            `Default pay method`,
+            `New pay method`,
+            `Del pay method`,
+            `Generate new api-key`,
         ],
         "backAndClose":
         [
@@ -108,7 +129,7 @@ function mainMenuButton(lan)
         [
             {
                 "text":raw.mainMenu[2],
-                "callback_data":"/address_book"
+                "callback_data":"/setting"
             },
         ],
         backAndClose(lan)
@@ -189,6 +210,18 @@ function domainDeleted(name,lan)
         backAndClose(lan)
     ]
 }
+function settingMenu(lan) {
+    var raw = getBtn(lan);
+    return [
+        [{
+            "text": raw.settingMenu[4],
+            "callback_data": "/keygen"
+        }],
+        backAndClose(lan)
+    ]
+}
+
+
 function getText(lan)
 {
     return text[0];
@@ -207,5 +240,6 @@ module.exports = {
     registerConfirm,
     domainManage,
     domainSelect,
-    domainDeleted
+    domainDeleted,
+    settingMenu
 }
