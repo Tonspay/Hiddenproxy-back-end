@@ -17,10 +17,10 @@ or set 301 redirect to your \`.ton\` / \`.adnl\` domain here.
         ],
         "domain":[
             `Domain management`,
-            `Name`,
+            `Path`,
             `Ln Address`,
             `Nostr Address`,
-            `Browser Visit`,
+            `Redirect address`,
             `Registed Time`,
             `🍺Update success !`
         ],
@@ -62,7 +62,7 @@ const btn = [
         "domain":[
             `⚙Edit Ln Address`,
             `⚙Edit Nostr Address`,
-            `⚙Edit Browser Visit`,
+            `⚙Edit Redirect`,
             `🛠Delete Domain`,
             `⚠️ Confirm Delete`
         ],
@@ -135,20 +135,8 @@ function domainManage(name,lan)
     return [
         [
             {
-                "text":raw.domain[0],
-                "callback_data":`/domain_edit_ln ${name}`
-            },
-        ],
-        [
-            {
-                "text":raw.domain[1],
-                "callback_data":`/domain_edit_nostr ${name}`
-            },
-        ],
-        [
-            {
                 "text":raw.domain[2],
-                "callback_data":`/domain_edit_http ${name}`
+                "callback_data":`/domain_edit_path ${name}`
             },
         ],
         [

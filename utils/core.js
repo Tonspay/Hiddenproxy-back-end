@@ -2,9 +2,9 @@ const db = require("./db");
 const api = require("./apis")
 const tool = require("./tools")
 const nt = require('nostr-tools')
-async function getRecord(uanme)
+async function getRecord(uname)
 {
-    var ret = await db.getDomainByName(uanme);
+    var ret = await db.getDomainByName(uname);
     if(ret && ret.length > 0)
     {
         console.log(ret[0])
@@ -16,36 +16,22 @@ async function getRecord(uanme)
     }
 }
 
-async function newRecord(uid,uanme,ln)
+async function newRecord(uid,uname,path)
 {
-    var domain = await db.verfiDomainOwning(uid,uanme);
+    var domain = await db.verfiDomainOwning(uid,uname);
     if(domain)
     {
         var forward = domain.forward;
-        var data = 
-        {
-            uanme:uanme,
-            link:ln,
-            raw:Buffer.from(JSON.stringify(
-                await api.anyRequest(
-                    tool.linkDecode(ln)
-                )
-            )).toString("base64")
-        }
-        forward['ln'] = data
-        // console.log(data)
-        if(data.raw)
-        {
-            await db.updateDomainForward(domain._id,forward);
-            return true;
-        }
+        forward['http'] = path
+        await db.updateDomainForward(domain._id,forward);
+        return true;
     }
     return false;
 }
 
-async function getNip05(uanme)
+async function getNip05(uname)
 {
-    var ret = await db.getDomainByName(uanme);
+    var ret = await db.getDomainByName(uname);
     if(ret && ret.length > 0)
     {
         ret[0].forward.nostr.raw = Buffer.from(ret[0].forward.nostr.raw,"base64").toString("utf-8")
@@ -56,9 +42,9 @@ async function getNip05(uanme)
     }
 }
 
-async function newNip05(uid,uanme,ln)
+async function newNip05(uid,uname,ln)
 {
-    var domain = await db.verfiDomainOwning(uid,uanme);
+    var domain = await db.verfiDomainOwning(uid,uname);
     if(domain)
     {
         var forward = domain.forward;
@@ -66,10 +52,10 @@ async function newNip05(uid,uanme,ln)
             names:{
             }
         }
-        nip05Data['names'][uanme] = nt.nip19.decode(ln).data
+        nip05Data['names'][uname] = nt.nip19.decode(ln).data
         var data = 
         {
-            uanme:uanme,
+            uname:uname,
             link:ln,
             raw:Buffer.from(JSON.stringify(
                 nip05Data

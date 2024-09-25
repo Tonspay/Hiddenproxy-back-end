@@ -98,6 +98,9 @@ async function callBackRouter(data,action,opts )
         case "domain_edit_nostr":
             await domain.editDomainNostr(bot,uid,req,data,opts);
             break;
+        case "domain_edit_path":
+            await domain.editDomainPath(bot,uid,req,data,opts);
+            break;
         case "empty":
             return null;
         case "close":

@@ -12,7 +12,7 @@ const cors = require('cors');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors());
-app.listen(9997, async function() {
+app.listen(process.env.PORT, async function() {
   console.log('https-server start')
 })
 app.get('/ping', async function(req, res) {
