@@ -10,7 +10,7 @@ const core = require("../../utils/core")
 const cors = require('cors');
 
 const auth = require("./middleware/auth");
-app.use(auth.auth);
+// app.use(auth.auth);
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -18,6 +18,13 @@ app.use(cors());
 app.listen(process.env.PORT, async function() {
   console.log('https-server start')
 })
+app.get('/', async function(req, res) {
+    res.send({
+        "code":200,
+        "data":"pong"
+    })
+})
+
 app.get('/ping', async function(req, res) {
     res.send({
         "code":200,
@@ -28,7 +35,7 @@ app.get('/ping', async function(req, res) {
 app.get('/:path', async function(req, res) {
     try{
         var s = await core.getRecord(req.params.path)
-        res.send(s.raw);
+        res.redirect(s)
     }catch(e)
     {
         console.log(e);

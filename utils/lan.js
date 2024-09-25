@@ -36,7 +36,7 @@ or set 301 redirect to your \`.ton\` / \`.adnl\` domain here.
         "placeHolder":[
             `Please input the subdomain/path you want to register . Eg : rubin `,
             `Name already exsit`,
-            `Please input your lighting network address by your wallet . Eg : xxx@getalby.com`,
+            `Please input your redirect address . Support \`.adnl\` / \`.ton\` and IPV4 / IPV6 or anyother Http-address  Eg : abcdehelloworld.adnl`,
             `Please input your redirect address . Support \`.adnl\` / \`.ron\` / IPV4 / IPV6 or anyother Http-address  Eg : abcdehelloworld.adnl`,
             `Please input link of your twitter or site .`,
             `Please input the domain you want to delete`

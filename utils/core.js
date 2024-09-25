@@ -8,9 +8,7 @@ async function getRecord(uname)
     if(ret && ret.length > 0)
     {
         console.log(ret[0])
-        ret[0].forward.ln.raw = Buffer.from(ret[0].forward.ln.raw ,"base64").toString("utf-8")
-        ret[0].forward.ln.raw = JSON.parse(ret[0].forward.ln.raw )
-        return ret[0].forward.ln
+        return ret[0].forward.http
     }else{
         return false;
     }

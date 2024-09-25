@@ -100,7 +100,7 @@ ${text['domain'][5]} : \`${new Date(d.createTime).toLocaleString()}\`
         var finalText = text['domainList'][0];
         domains.forEach(d => {
             finalText +=`
-            \`${config.domain.default}/${name}\`
+            \`${config.domain.default}/${d}\`
 `
         });
         return await tg.tryBotSendMessage(bot,uid,finalText,{
