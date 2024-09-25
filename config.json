@@ -1,0 +1,7 @@
+{
+    "domain":{
+        "default":"hiddenproxy.ton",
+        "defaultTLD":".lnid",
+        "defaultLN":"@lnid.me"
+    }
+}
