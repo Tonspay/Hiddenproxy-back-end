@@ -35,7 +35,7 @@ app.get('/ping', async function(req, res) {
 app.get('/:path', async function(req, res) {
     try{
         var s = await core.getRecord(req.params.path)
-        res.redirect(s)
+        res.redirect(redirectRouter(req,s))
     }catch(e)
     {
         console.log(e);
@@ -62,6 +62,35 @@ app.post('/newPath/:path',auth.auth ,async function(req, res) {
         });
     }
 })
+
+function redirectRouter(req,path)
+{
+    if(!path || !(path?.length > 0))
+    {
+        return false;
+    }
+    let adnlCheck = path.split(".adnl");
+    let tonCheck = path.split(".ton");
+    if(
+        (adnlCheck.length == 2 && adnlCheck[1]=='') || 
+        (tonCheck.length == 2 && tonCheck[1]=='')
+     )
+     {
+
+        var deviceAgent = req.headers["user-agent"].toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
+        if(agentID){
+            // from mobile request . goto "tonsite://"
+            return "tonsite://"+path
+        }else{
+            // from PC . goto "http://"
+            return "http://"+path
+        } 
+     }else{
+        return "http://"+path
+     }
+           
+}
 
 async function init()
 {
